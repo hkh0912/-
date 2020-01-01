@@ -3,7 +3,7 @@
 #include<Windows.h>
 using namespace std;
 
-void dfs(vector<int>v[], int start, bool check[]);
+void dfs(int start);
 
 vector<int>v[1001];
 int vertex;
@@ -19,28 +19,28 @@ int main(void) {
 		v[temp[0]].push_back(temp[1]);
 		v[temp[1]].push_back(temp[0]);
 	}
-	dfs(v, 1, check);
+	dfs(1);
 
 	int count = 1;
-	//for (int k = 1; k <= vertex; k++) {
-		//if (!check[k]) {
-			//dfs(v,k,check);
-			//count++;
-		//}
-	//}
+	for (int k = 1; k <= vertex; k++) {
+		if (!check[k]) {
+			dfs(k);
+			count++;
+		}
+	}
 	cout << count << endl;
 	system("pause");
 	return 0;
 }
 
-void dfs(vector<int>v[], int start, bool check[]) {
+void dfs(int start) {
 	check[start] = true;
 	cout << start << ' ';
 	for (int j = 0; j < v[start].size(); j++) {
 		int a = v[start].at(j);
 		
 		if (!check[a]) {
-			dfs(v, a, check);
+			dfs(a);
 		}
 	}
 }
