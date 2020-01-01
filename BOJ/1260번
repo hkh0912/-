@@ -1,0 +1,56 @@
+#include <iostream>
+#include <queue>
+#include <windows.h>
+
+using namespace std;
+
+void dfs(int v);
+void bfs(int w);
+int visit[1001] = { 0, };
+int matrix[1001][1001];
+int num;
+int line;
+int start;
+int a, b, c;
+
+int main() {
+
+	cin >> num >> line >> start;
+	for (int i = 0; i < line; i++) {
+		cin >> a >> b;
+		matrix[a][b] = matrix[b][a] = 1;
+	}
+	dfs(start);
+	cout << endl;
+	bfs(start);
+	system("pause");
+	return 0;
+}
+
+void dfs(int start) {
+	cout << start << ' ';
+	visit[start] = 1;
+	for (int i = 1; i <= num; i++) {
+		if (visit[i] == 0 && matrix[start][i] == 1) {
+			dfs(i);
+		}
+	}
+}
+
+void bfs(int start) {
+	queue<int> q;
+	q.push(start);
+	visit[start] = 0;
+	while (!q.empty()) {
+		c = q.front();
+		cout << c << ' ';
+		q.pop();
+		for (int j = 1; j <= num; j++) {
+			if (visit[j] == 1 && matrix[c][j] == 1) {
+				visit[j] = 0;
+				q.push(j);
+			}
+		}
+	}
+}
+
