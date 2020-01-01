@@ -1,0 +1,46 @@
+#include<iostream>
+#include<vector>
+#include<Windows.h>
+using namespace std;
+
+void dfs(vector<int>v[], int start, bool check[]);
+
+vector<int>v[1001];
+int vertex;
+int edge;
+
+bool check[1001] = { 0 };
+int main(void) {
+	cin >> vertex >> edge;
+
+	for (int i = 0; i < edge; i++) {
+		int temp[2];
+		cin >> temp[0] >> temp[1];
+		v[temp[0]].push_back(temp[1]);
+		v[temp[1]].push_back(temp[0]);
+	}
+	dfs(v, 1, check);
+
+	int count = 1;
+	//for (int k = 1; k <= vertex; k++) {
+		//if (!check[k]) {
+			//dfs(v,k,check);
+			//count++;
+		//}
+	//}
+	cout << count << endl;
+	system("pause");
+	return 0;
+}
+
+void dfs(vector<int>v[], int start, bool check[]) {
+	check[start] = true;
+	cout << start << ' ';
+	for (int j = 0; j < v[start].size(); j++) {
+		int a = v[start].at(j);
+		
+		if (!check[a]) {
+			dfs(v, a, check);
+		}
+	}
+}
