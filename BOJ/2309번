@@ -1,0 +1,34 @@
+#include <iostream>
+#include <windows.h>
+#include <algorithm>
+using namespace std;
+int arr[100];
+int sum = 0;
+int hun;
+int index1, index2;
+int main(void) {
+	for (int i = 0; i < 9; i++) {
+		cin >> arr[i];
+		sum = sum + arr[i];
+		
+	}
+
+	hun = sum - 100;
+
+	sort(arr, arr + 9);
+
+	for (int a = 0; a < 8; a++) {
+		for (int b = a + 1; b < 9; b++) {
+			if (arr[a] + arr[b] == hun) {
+				index1 = a;
+				index2 = b;
+			}
+		}
+	}
+	for (int j = 0; j < 9; j++) {
+		if (j != index1 && j != index2) {
+			cout << arr[j] << endl;
+		}
+	}
+	system("pause");
+}
