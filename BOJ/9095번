@@ -1,0 +1,23 @@
+#include<iostream>
+#include<windows.h>
+
+using namespace std;
+
+
+int n, a;
+int arr[100];
+int main(void) {
+	arr[1] = 1;
+	arr[2] = 2;
+	arr[3] = 4;
+	for (int j = 4; j < 12; j++) {
+		arr[j] = arr[j - 3] + arr[j - 2] + arr[j - 1];
+	}
+
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		cin >> a;
+		cout << arr[a] << endl;
+	}
+	system("pause");
+}
