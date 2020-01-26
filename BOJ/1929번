@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <iostream>
+#include <windows.h>
+#include <vector>
+using namespace std;
+int num[1000001];
+int min, max;
+vector<int>v;
+int main(void) {
+	cin >> min >> max;
+	for (int i = 2; i <= max; i++) {
+		num[i] = 1;	
+	}
+	for (int i = 2; i*i <= max; i++) {
+		if (num[i] == 1) {
+			for (int j = i * i; j <= max; j += i) {
+				num[j] = 0;
+			}
+		}
+	}
+	for (int i = min; i <= max; i++) {
+		if (num[i] == 1)
+			cout << i << ' ' << endl;
+	}
+
+	system("pause");
+
+}
