@@ -1,0 +1,54 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <windows.h>
+#define MAX 21
+int arr[21];
+using namespace std;
+
+void dfs(int arr[], int n, int s, int index, int cnt, int num);
+int part = 0;//부분수열의 수
+bool visited[MAX] = { 0 };
+vector<int> v;
+
+int n, s;
+int index = 0;
+int cnt = 0;
+int cntt = 0;
+
+void dfs(int arr[], int n, int s, int index, int cnt, int num) {
+	if (cnt == num) {
+		int sum = 0;
+		for (int a = 0; a < v.size(); a++) {
+			sum += v.at(a);
+		}
+		if (sum == s)
+			cntt++;
+		return;
+	}
+	
+	else {
+		for (int i = index; i < n; i++) {
+			if (visited[i] == false) {
+				visited[i] = true;
+				v.push_back(arr[i]);
+				dfs(arr, n, s, i + 1, cnt + 1, num);
+				v.pop_back();
+				visited[i] = false;
+			}
+		}
+	}
+}
+
+int main(void) {
+	cin >> n >> s;
+	for (int j = 0; j < n; j++) {
+		cin >> arr[j];
+	}
+	sort(arr, arr + n);
+	for (int b = 1; b <= n; b++) {
+		dfs(arr, n, s, index, cnt, b);
+	}
+	cout << cntt;
+	system("pause");
+}
