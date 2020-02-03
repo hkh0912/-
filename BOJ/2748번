@@ -1,0 +1,27 @@
+#include <iostream>
+#include <windows.h>
+
+using namespace std;
+
+int n;
+int arr[90];
+
+void fibonacci(int n);
+
+int main(void) {
+	arr[0] = 0;
+	arr[1] = 1;
+	cin >> n;
+	fibonacci(n);
+
+	system("pause");
+	return 0;
+	
+}
+
+void fibonacci(int n) {
+	for (int i = 2; i <= 90; i++) {
+		arr[i] = arr[i - 2] + arr[i - 1];
+	}
+	cout << arr[n];
+}
