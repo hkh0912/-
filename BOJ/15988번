@@ -1,0 +1,20 @@
+#include <iostream>
+#include <windows.h>
+using namespace std;
+
+int dp[1000000];
+int n, m;
+int main(void) {
+	cin >> n;
+	dp[1] = 1;
+	dp[2] = 2;
+	dp[3] = 4;
+	for (int i = 0; i < n; i++) {
+		cin >> m;
+		for (int j = 4; j <= m; j++) {
+			dp[j] = dp[j - 1] + dp[j - 2] + dp[j - 3];
+		}
+		cout << dp[m] << endl;
+	}
+	system("pause");
+}
