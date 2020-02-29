@@ -1,0 +1,49 @@
+#include <iostream>
+#include <windows.h>
+#include<vector>
+#include<queue>
+
+using namespace std;
+
+int vertex;
+int a, b;
+int edge;
+int n, m;
+bool check[101];
+int cache[101];
+vector<int>v[101];
+queue<int>q;
+int bfs(void);
+
+int main(void) {
+	cin >> vertex >> a >> b >> edge;
+	for (int i = 0; i < edge; i++) {
+		cin >> n >> m;
+		v[n].push_back(m);
+		v[m].push_back(n);
+	}
+
+	cout << bfs() <<endl;
+	system("pause");
+}
+int bfs(void) {
+	q.push(a);
+	while (!q.empty()) {
+		int c = q.front();
+
+		if (c == b) {
+			return cache[c];
+		}
+		q.pop();
+		check[c] = true;
+		for (int i = 0; i < v[c].size(); i++) {
+			int x = v[c].at(i);
+			if (!check[x]) {
+				q.push(x);
+				cache[x] = cache[c] + 1;
+			}
+		}
+	}
+	return -1;
+
+}
