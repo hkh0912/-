@@ -1,0 +1,47 @@
+#include<iostream>
+#include<windows.h>
+#include<vector>
+
+using namespace std;
+
+int n,a;
+void dfs(int idx, int cnt);
+bool check[50];
+vector<int>v;
+vector<int>w;
+int main(void) {
+	while (1) {
+		cin >> n;
+		v.clear();
+		w.clear();
+		if (n == 0)break;
+		for (int i = 0; i < n; i++) {
+			cin >> a;
+			v.push_back(a);
+		}
+		dfs(0, 0);
+		cout << endl;
+	}
+	system("pause");
+}
+
+void dfs(int idx, int cnt) {
+	if (cnt == 6) {
+		for (int i = 0; i < w.size(); i++) {
+			cout << w[i] << " ";
+		}
+		cout << endl;
+		return;
+	}
+
+	for (int i = idx; i < v.size(); i++) {
+		if (check[v[i]] == true)continue;
+		if (check[v[i]] == false) {
+			check[v[i]] = true;
+			w.push_back(v[i]);
+			dfs(i + 1, cnt + 1);
+			w.pop_back();
+			check[v[i]] = false;
+		}
+	}
+}
