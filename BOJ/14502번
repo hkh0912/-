@@ -1,0 +1,140 @@
+#include <iostream>
+#include <windows.h>
+#include<vector>
+#include<queue>
+#include<algorithm>
+using namespace std;
+
+vector<pair<int, int>>q;
+vector<pair<int, int>>p;
+void one(int index, int cnt);
+void BFS(int a, int b);
+void spread_virus();
+
+int index;
+int answer = 0;
+int cnt, cnt1;
+bool check[64];
+int map[8][8];
+int copy_map[8][8];
+bool visit[8][8];
+int n, m, x, y;
+
+int dx[4] = { 1, -1, 0, 0 };
+int dy[4] = { 0, 0, 1, -1 };
+
+void BFS(int a, int b)
+{
+	queue<pair<int, int>> Q;
+	Q.push(make_pair(a, b));
+	visit[a][b] = true;
+
+	while (Q.empty() == 0)
+	{
+		int z1 = Q.front().first;
+		int z2 = Q.front().second;
+		//cout << z1 << z2 << endl;
+		Q.pop();
+
+		for (int i = 0; i < 4; i++)
+		{
+			int nx = z1 + dx[i];
+			int ny = z2 + dy[i];
+
+			if (nx >= 0 && ny >= 0 && nx < n && ny < m)
+			{
+				if (visit[nx][ny] == false && copy_map[nx][ny] == 0)
+				{
+					copy_map[nx][ny] = 2;
+					visit[nx][ny] = true;
+					Q.push(make_pair(nx, ny));
+				}
+			}
+		}
+	}
+}
+
+int main(void) {
+	cin >> n >> m;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> map[i][j];
+			if (map[i][j] == 0) //빈칸일때 q에 넣는다.
+				q.push_back(make_pair(i, j));
+			else if (map[i][j] == 2)
+				p.push_back(make_pair(i, j)); // 바이러스 p에 넣는다.
+		}
+	}
+	one(0, 0);
+	cout << answer << endl;
+	system("pause");
+}
+
+void spread_virus() {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			copy_map[i][j] = map[i][j];
+			visit[i][j] = { 0 };
+		}
+	}
+	int cnt2 = 0;
+	for (int i = 0; i < q.size(); i++) {
+		if (cnt2 == 3)break;
+		if (check[i] == true) {
+			int a = q[i].first;
+			int b = q[i].second;
+			//cout << a << b << endl;
+			copy_map[a][b] = 1;
+			cnt2++;
+		}
+	}
+	for (int j = 0; j < p.size(); j++) {
+		int c = p[j].first;
+		int d = p[j].second;
+		//cout << c << d << endl;
+		BFS(c, d);
+	}
+	int e = 0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (copy_map[i][j] == 0) {
+				e++;
+				//cout << e << endl;
+			}
+		}	
+	}
+	answer = max(answer, e);
+	//cout << answer << endl;
+}
+void one(int index, int cnt) {
+	if (cnt == 3) {
+		spread_virus();
+		return;
+	}
+
+	for (int i = index; i < q.size(); i++) {
+		if (check[i] == true)continue;
+		if (check[i] == false) {
+			check[i] = true;
+			one(i + 1, cnt + 1);
+			check[i] = false;
+		}
+	}
+}
+
+//void DFS(int x, int y) { //바이러스를 퍼트리기 위한 DFS
+//	for (int i = 0; i < 4; i++) {
+//		int newX = dx[i] + x;
+//		int newY = dy[i] + y;
+////		cout << newX << newY << endl;
+//		if (newX >= 0 && newX < n && newY >= 0 && newY < m) {
+//			if (copy_map[newX][newY] == 0) {
+//				copy_map[newX][newY] = 2;
+//				DFS(newX, newY);
+//			}
+//		}
+//	}
+//}
+
+
+
