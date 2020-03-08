@@ -1,0 +1,65 @@
+#include<iostream>
+#include<windows.h>
+#include<string>
+#include <stdio.h>
+#include<algorithm>
+
+using namespace std;
+
+char arr[50][50];
+int n,m,cnt, cnt1;
+int x;
+int y = 1000;
+
+int chess(int a, int b);
+
+int main(void) {
+	cin >> n >> m;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			cin >> arr[i][j];
+		}
+	}
+	for (int i = 0; i <= n - 8; i++) {
+		for (int j = 0; j <= m - 8; j++) {
+			y = min(y,chess(i, j));
+			
+		}
+	}
+	cout << y << endl;
+	system("pause");
+}
+
+int chess(int a, int b) {
+	cnt = 0;
+	cnt1 = 0;
+	for (int i = a; i < a + 8; i++) {
+		for (int j = b; j < b + 8; j++) {
+			if ((i + j) % 2 == 0) {
+				if (arr[i][j] == 'B') {
+					cnt++;
+				}
+			}
+			if ((i + j) % 2 == 1) {
+				if (arr[i][j] == 'W') {
+					cnt++;
+				}
+			}
+			if ((i + j) % 2 == 0) {
+				if (arr[i][j] == 'W') {
+					cnt1++;
+				}
+			}
+			if ((i + j) % 2 == 1) {
+				if (arr[i][j] == 'B') {
+					cnt1++;
+				}
+			}
+		}
+	}
+	return min(cnt, cnt1);
+}
+
+	
