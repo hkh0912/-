@@ -1,0 +1,86 @@
+#include<iostream>
+#include<windows.h>
+#include<queue>
+#include<algorithm>
+
+using namespace std;
+
+int arr[101][101];
+bool check[101][101];
+int dx[] = { 1,-1,0,0 };
+int dy[] = { 0,0,1,-1 };
+
+int n, rain;
+int ans = 0;
+int min_height = 1000;
+int max_height = -1;
+
+void dfs(int a, int b, int rain);
+
+int main(void) {
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			cin >> arr[i][j];
+			min_height = min(min_height, arr[i][j]);
+			max_height = max(max_height, arr[i][j]);
+		}
+	}
+
+	if (min_height == max_height)
+	{
+		cout << 1 << endl;
+		system("pause");
+		return 0;
+	}	
+
+	for(int rain = min_height; rain <= max_height; rain++)
+	{
+		int cnt = 0;
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				check[i][j] = false;
+			}
+		}
+		
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < n; j++)
+			{
+				if (arr[i][j] > rain && !check[i][j])
+				{
+					check[i][j] = true;
+					dfs(i, j, rain);
+					cnt++;
+					//cout << cnt << endl;
+				}
+			}
+		}
+		ans = max(ans, cnt);
+	}
+	cout << ans << endl;
+	system("pause");
+}
+
+void dfs(int a, int b, int rain)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		int a1 = a + dx[i];
+		int b1 = b + dy[i];
+		//cout << a1 << b1 << endl;
+
+		if (a1 >= 0 && a1 < n && b1 >= 0 && b1 < n)
+		{
+			if (arr[a1][b1] > rain && !check[a1][b1])
+			{
+				check[a1][b1] = true;
+				dfs(a1, b1, rain);
+			}
+		}
+	}
+}
