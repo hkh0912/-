@@ -1,0 +1,76 @@
+#include<iostream>
+#include<windows.h>
+#include<algorithm>
+
+using namespace std;
+
+int germ();
+void copy();
+int map[10][10];
+int copy_map[10][10];
+int ans;
+int main(void)
+{
+	for (int i = 1; i < 9; i++)
+	{
+		for (int j = 1; j < 9; j++)
+		{
+			cin >> map[i][j];
+		}
+	}
+	germ();
+	system("pause");
+}
+void copy()
+{
+	for (int i = 1; i < 9; i++) {
+		for (int j = 1; j < 9; j++) {
+			copy_map[i][j] = map[i][j];
+		}
+	}
+}
+
+int germ()
+{
+	for (int i = 1; i < 9; i++)
+	{
+		for (int j = 1; j < 9; j++)
+		{
+			copy();
+			if (map[i][j] == 0) {
+				copy_map[i][j] = 1;
+				if (map[i - 1][j - 1] == -1)
+					copy_map[i - 1][j - 1] = 1;
+				if (map[i - 1][j] == -1)
+					copy_map[i - 1][j] = 1;
+				if (map[i - 1][j + 1] == -1)
+					copy_map[i - 1][j + 1] = 1;
+				if (map[i][j - 1] == -1)
+					copy_map[i][j - 1] = 1;
+				if (map[i][j + 1] == -1)
+					copy_map[i][j + 1] = 1;
+				if (map[i + 1][j - 1] == -1)
+					copy_map[i + 1][j - 1] = 1;
+				if (map[i + 1][j] == -1)
+					copy_map[i + 1][j] = 1;
+				if (map[i + 1][j + 1] == -1)
+					copy_map[i + 1][j + 1] = 1;	
+
+				int cnt = 0;
+				for (int k = 1; k < 9; i++)
+				{
+					for (int l = 1; l < 9; j++)
+					{
+						if (copy_map[k][l] == 1)
+							cnt++;
+					}
+					ans = max(ans, cnt);
+				}
+			}
+			else {
+				continue;
+			}
+		}
+	}
+	return ans;
+}
