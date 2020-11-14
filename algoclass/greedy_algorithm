@@ -1,0 +1,35 @@
+#include<vector>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int solution(vector<vector<int> > arr)
+{
+    int answer = 1;
+    int n = arr.size();
+    
+    vector<pair<int,int>>v;
+    for(int i = 0; i < n; i++){
+        v.push_back(pair<int,int>(arr[i][1], arr[i][0]));
+    }
+    sort(v.begin(), v.end());
+    
+    // int time = v[0].first;
+    // for(int i = 1; i < n; i++){
+    //     if(time <= v[i].second){
+    //         answer++;
+    //         time = v[i].first;
+    //     }
+    // }
+    int m = 0;
+    int a = 1;
+    int time = v[0].first;
+    for(int a = 1; a<n; a++){
+        if(time <= v[a].second){
+            answer += 1;
+            time = v[a].first;
+                
+        }
+    }
+    return answer;
+}
